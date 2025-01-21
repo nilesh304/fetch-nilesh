@@ -97,16 +97,10 @@ func GetPoint(id string) (map[string]int, error, int) {
 		points += 6
 	}
 
-	twoPm, err := time.Parse("15:04", "14:00")
-	if err != nil {
-		return nil, errors.New("unable to parse two pm"), http.StatusInternalServerError
-	}
-	fourPm, err := time.Parse("15:04", "16:00")
-	if err != nil {
-		return nil, errors.New("unable to parse four pm"), http.StatusInternalServerError
-	}
+	hour := reciept.PurchaseTime.Hour()
+	minute := reciept.PurchaseTime.Minute()
 
-	if reciept.PurchaseTime.After(twoPm) && reciept.PurchaseTime.Before(fourPm) {
+	if (hour == 14 && minute > 0) || (hour > 14 && hour < 16) {
 		points += 10
 	}
 	resp := map[string]int{

@@ -37,10 +37,10 @@ func Process(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Printf("error %s", err)
 		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(map[string]string{"err": err.Error()})
+		json.NewEncoder(w).Encode(map[string]string{"message": err.Error()})
 		return
 	}
-	w.WriteHeader(http.StatusCreated)
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(resp)
 
 }
@@ -55,7 +55,7 @@ func GetPoints(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Printf("error %s", err)
 		w.WriteHeader(status)
-		json.NewEncoder(w).Encode(map[string]string{"err": err.Error()})
+		json.NewEncoder(w).Encode(map[string]string{"message": err.Error()})
 		return
 	}
 	w.WriteHeader(http.StatusCreated)
